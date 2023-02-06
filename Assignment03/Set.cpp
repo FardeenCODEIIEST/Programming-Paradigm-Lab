@@ -2,6 +2,7 @@
 #include <stack>
 #include <algorithm>
 #include <math.h>
+#include <iomanip>
 using namespace std;
 
 // Doing the set containing only integers
@@ -71,9 +72,9 @@ private:
 public:
   Set();                        // default constructor
   Set(int);                     // Parameterised Constructor
-  Set(Set &);                   // Copy Constructor
+  Set(const Set &);             // Copy Constructor
   ~Set();                       // Destructor
-  void add(int);                // Adding elements to the set
+  void add(const int);          // Adding elements to the set
   bool contains(int);           // Checking for element in set
   Set unionSet(Set &);          // Union of sets
   Set intersectionSet(Set &);   // Intersection of Sets
@@ -84,10 +85,10 @@ public:
   void cartesianProduct(Set &); // Cartesian Product of Sets
   void displayPowerSet();       // Power set of a set
   void display();               // Display the set
-  float mean();                 // Mean
-  float median();               // Median
-  float variance();             // Variance
-  float standardDeviation();    // Standard Deviation
+  double mean();                // Mean
+  double median();              // Median
+  double variance();            // Variance
+  double standardDeviation();   // Standard Deviation
 };
 
 Set::Set()
@@ -102,7 +103,7 @@ Set::Set(int cap)
   size = cap;
 }
 
-Set::Set(Set &S)
+Set::Set(const Set &S)
 {
   root = S.root;
   size = S.size;
@@ -113,7 +114,7 @@ Set::~Set()
   delete root;
 }
 
-void Set::add(int data)
+void Set::add(const int data) // The data must be set to const otherwise compiler throws lvalue to rvalue ref. error
 {
   if (!root->present(root, data))
   {
@@ -315,7 +316,7 @@ void Set::displayPowerSet()
     for (int i = 0; i < this->size; i++)
     {
       // Backtracking the elements
-      if ((n & (i << i)) == 0)
+      if ((n & (1 << i)) == 0)
       {
         cout << a[i] << " ";
       }
@@ -335,19 +336,19 @@ void Set::display()
   cout << "}\n";
 }
 
-float Set::mean()
+double Set::mean()
 {
-  int sum = 0;
+  double sum = 0;
   int *a = this->setToArray();
   for (int i = 0; i < this->size; i++)
   {
     sum += a[i];
   }
-  float ans = sum / this->size;
+  double ans = sum / (this->size);
   return ans;
 }
 
-float Set::median()
+double Set::median()
 {
   int *a = this->setToArray();
   sort(a, a + this->size);
@@ -357,25 +358,132 @@ float Set::median()
   }
   else
   {
-    float res = 0.5 * (a[this->size / 2] + a[this->size / 2 - 1]);
+    double res = 0.5 * ((double)a[this->size / 2] + (double)a[this->size / 2 - 1]);
     return res;
   }
 }
 
-float Set::variance()
+double Set::variance()
 {
   int *a = this->setToArray();
-  float m = this->mean();
-  int sum = 0;
+  double m = this->mean();
+  double sum = 0;
   for (int i = 0; i < this->size; i++)
   {
     sum += (a[i] * a[i]);
   }
-  float ren = sum / this->size;
+  double ren = sum / this->size;
   return ren - m * m;
 }
 
-float Set::standardDeviation()
+double Set::standardDeviation()
 {
   return sqrt(this->variance());
+}
+
+int main()
+{
+  cout << "\t\tSet Implemenetation\n";
+  cout << "Enter the total number of elements in the Universal Set\n";
+  int cap;
+  cin >> cap;
+  cout << "The Universal Set will consist of integers from 0 to " << cap - 1 << "\n";
+  Set U;
+  for (int i = 0; i < cap; i++)
+  {
+    U.add(i);
+  }
+  cout << "For Set 1\n";
+  Set S1;
+  cout << "Enter the elements to be added in the Set 1, enter -1 to stop the process\n";
+  while (1)
+  {
+    int d;
+    cin >> d;
+    if (d >= cap)
+    {
+      cout << "Not Possible\n";
+      exit(0);
+    }
+    if (d == -1)
+    {
+      break;
+    }
+    S1.add(d);
+  }
+  cout << "For Set 2\n";
+  Set S2;
+  cout << "Enter the elements to be added in the Set 2, enter -1 to stop the process\n";
+  while (1)
+  {
+    int d;
+    cin >> d;
+    if (d >= cap)
+    {
+      cout << "Not Possible\n";
+      exit(0);
+    }
+    if (d == -1)
+    {
+      break;
+    }
+    S2.add(d);
+  }
+  cout << "The Union of the Sets is:\n";
+  Set Uni = S1.unionSet(S2);
+  Uni.display();
+  cout << "The Intersection of the Sets is:\n";
+  Set Inter = S1.intersectionSet(S2);
+  Inter.display();
+  cout << "Set S1 is:\n";
+  S1.display();
+  cout << "The Complement of Set S1 is:\n";
+  Set S11 = S1.complementSet(U);
+  S11.display();
+  cout << "Set S2 is:\n";
+  S2.display();
+  cout << "The complement of Set S2 is:\n";
+  Set S22 = S2.complementSet(U);
+  S22.display();
+  cout << "The Set Difference S1-S2 is:\n";
+  Set S1_2 = S1 - S2;
+  S1_2.display();
+  cout << "The Set Difference S2-S1 is:\n";
+  Set S2_1 = S2 - S1;
+  S2_1.display();
+  if (S1 == S2)
+  {
+    cout << "The Sets S1 and S2 are equal\n";
+  }
+  else
+  {
+    cout << "The Sets S1 and S2 are not equal\n";
+  }
+  cout << "The Cartesian product of Set S1 and S2 (S1xS2) is:\n";
+  S1.cartesianProduct(S2);
+  cout << "The Cartesian product of Set S1 and S2 (S2xS1) is:\n";
+  S2.cartesianProduct(S1);
+  cout << "The Power Set of Set S1 is:\n";
+  S1.displayPowerSet();
+  cout << "The Power Set of Set S2 is:\n";
+  S2.displayPowerSet();
+  cout << "Set by definition of our BST implementation will be distinct\n";
+  cout << fixed << setprecision(5);
+  cout << "The mean of Set S1 is:\n"
+       << S1.mean() << "\n";
+  cout << "The median of Set S1 is:\n"
+       << S1.median() << "\n";
+  cout << "The variance of Set S1 is:\n"
+       << S1.variance() << "\n";
+  cout << "The Standard Deviation of Set S1 is:\n"
+       << S1.standardDeviation() << "\n";
+  cout << "The mean of Set S2 is:\n"
+       << S2.mean() << "\n";
+  cout << "The median of Set S2 is:\n"
+       << S2.median() << "\n";
+  cout << "The variance of Set S2 is:\n"
+       << S2.variance() << "\n";
+  cout << "The Standard Deviation of Set S2 is:\n"
+       << S2.standardDeviation() << "\n";
+  return 0;
 }
