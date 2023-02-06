@@ -1,0 +1,432 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
+#include <math.h>
+#include <stdlib.h>
+#define MAX 1000
+typedef struct Node
+{
+  int data;
+  struct Node *next;
+} Node;
+void swap(int *a, int *b)
+{
+  int t = *a;
+  *a = *b;
+  *b = t;
+}
+Node *insertLL(Node *head, int d)
+{
+  if (head == NULL)
+  {
+    Node *temp = (Node *)malloc(sizeof(Node));
+    temp->data = d;
+    temp->next = NULL;
+    head = temp;
+    return head;
+  }
+  else
+  {
+    Node *temp = (Node *)malloc(sizeof(Node));
+    temp->data = d;
+    Node *t = head;
+    temp->next = t;
+    head = temp;
+  }
+}
+void displayLL(Node *head)
+{
+  Node *t = head;
+  while (t != NULL)
+  {
+    printf("%d\n", t->data);
+    t = t->next;
+  }
+}
+Node *sortLL(Node *head, Node *temp1, Node *temp2) // temp2 for outerloop check and temp1 for innerloop check
+{
+  if (temp2 == NULL)
+  {
+    return head;
+  }
+  else
+  {
+    Node *t = temp1->next;
+    while (t != NULL)
+    {
+      if (temp1->data > t->data)
+      {
+        swap(&(temp1->data), &(t->data));
+      }
+      t = t->next;
+    }
+    sortLL(head, temp2, temp2->next);
+  }
+}
+int max(int a, int b)
+{
+  return (a > b) ? a : b;
+}
+int factorial(int a)
+{
+  if (a == 1 || a == 0)
+  {
+    return 1;
+  }
+  else
+  {
+    return a * factorial(a - 1);
+  }
+}
+int sum(int *a, int n)
+{
+  if (n == 1)
+  {
+    return a[n - 1];
+  }
+  else
+  {
+    return a[0] + sum(a + 1, n - 1);
+  }
+}
+int compare(char *s1, char *s2)
+{
+  if (s1[0] == '\0' && s2[0] == '\0')
+  {
+    return 0;
+  }
+  else if (s1[0] < s2[0])
+  {
+    return -1;
+  }
+  else if (s1[0] > s2[0])
+  {
+    return 1;
+  }
+  else
+  {
+    return compare(s1 + 1, s2 + 1);
+  }
+}
+int largest(int a[], int n)
+{
+  if (n == 1)
+  {
+    return a[0];
+  }
+  else
+  {
+    return max(largest(a, n - 1), a[n - 1]);
+  }
+}
+int gcd(int a, int b) // Euclidean Approach
+{
+  if (a == 0)
+  {
+    return b;
+  }
+  else
+  {
+    return gcd(b % a, a);
+  }
+}
+bool search(int arr[], int n, int t)
+{
+  if (n == 0)
+  {
+    return false;
+  }
+  else
+  {
+    if (arr[0] == t)
+    {
+      return true;
+    }
+    else
+    {
+      return search(arr + 1, n - 1, t);
+    }
+  }
+}
+void reverse(int arr[], int n)
+{
+  if (n != 0)
+  {
+    printf("%d\n", arr[n - 1]);
+    reverse(arr, n - 1);
+  }
+  else
+  {
+    printf("\n");
+    return;
+  }
+}
+bool palindrome(char str[], int n)
+{
+  if (n == 0 || n == 1)
+  {
+    return true;
+  }
+  else
+  {
+    bool f1 = (str[0] == str[n - 1]);
+    return (palindrome(str + 1, n - 2) && f1);
+  }
+}
+void replace(char *str, int n, char c1, char c2)
+{
+  if (n != 0)
+  {
+    if (str[0] == c1)
+    {
+      printf("%c", c2);
+    }
+    else
+    {
+      printf("%c", str[0]);
+    }
+    replace(str + 1, n - 1, c1, c2);
+  }
+  else
+  {
+    printf("\n");
+    return;
+  }
+}
+void sort(int arr[], int n)
+{
+  if (n == 1)
+  {
+    return;
+  }
+  else
+  {
+    int index = n - 1;
+    for (int i = 0; i < n - 1; i++)
+    {
+      if (arr[i] > arr[index])
+      {
+        swap(&arr[i], &arr[index]);
+      }
+    }
+    sort(arr, n - 1);
+  }
+}
+int treeLargest(int *arr, int n, int index)
+{
+  if (arr[n * index + n] == 0)
+  {
+    return arr[index];
+  }
+  else
+  {
+    return treeLargest(arr, n, n * index + n);
+  }
+}
+int main()
+{
+  int ch;
+  printf("Recursion Simulation\n");
+  while (1)
+  {
+    printf("Enter\n 0.To terminate the process\n 1.Factorial of an integer\n 2.Sum of n integers\n 3.String Comparison\n 4.Largest among n integers\n 5.GCD of two integers by euclidean approach\n 6.Search a given item in a list\n 7.Reversing a list\n 8.Checking whether a string is palindrome or not\n 9.Replacing all occurences of a particular character in a string by another character\n 10.Sorting an array in ascending order\n 11.Sorting a linked list\n 12.Node containing largest element in a tree\n");
+    scanf("%d", &ch);
+    if (ch == 0)
+    {
+      break;
+    }
+    else if (ch == 1)
+    {
+      int n1;
+      printf("Enter the value of integer\n");
+      scanf("%d", &n1);
+      int fact = factorial(n1);
+      printf("The factorial of %d is %d\n", n1, fact);
+    }
+    else if (ch == 2)
+    {
+      int n2;
+      printf("Enter the number of integers\n");
+      scanf("%d", &n2);
+      int arr[n2];
+      printf("Enter the integers\n");
+      for (int i = 0; i < n2; i++)
+      {
+        scanf("%d", &arr[i]);
+      }
+      int s = sum(arr, n2);
+      printf("The sum of the integers is %d\n", s);
+    }
+    else if (ch == 3)
+    {
+      char s1[20], s2[20];
+      printf("Enter the first string\n");
+      scanf("%s", s1);
+      printf("Enter the second string\n");
+      scanf("%s", s2);
+      int c = compare(s1, s2);
+      printf("The required answer is %d\n", c);
+    }
+    else if (ch == 4)
+    {
+      printf("Enter the number of elements\n");
+      int n;
+      scanf("%d", &n);
+      printf("Enter the integers\n");
+      int a[n];
+      for (int i = 0; i < n; i++)
+      {
+        scanf("%d", &a[i]);
+      }
+      int l = largest(a, n);
+      printf("The largest integer is %d\n", l);
+    }
+    else if (ch == 5)
+    {
+      int x, y;
+      printf("Enter the first integer\n");
+      scanf("%d", &x);
+      printf("Enter the second integer\n");
+      scanf("%d", &y);
+      int hcf = gcd(x, y);
+      printf("The HCF of two integers is %d\n", hcf);
+    }
+    else if (ch == 6)
+    {
+      int n;
+      printf("Enter the total number of integers\n");
+      scanf("%d", &n);
+      int b[n];
+      printf("Enter the integers\n");
+      for (int i = 0; i < n; i++)
+      {
+        scanf("%d", &b[i]);
+      }
+      int t;
+      printf("Enter the integer to be searched\n");
+      scanf("%d", &t);
+      bool flag = search(b, n, t);
+      if (flag)
+      {
+        printf("The item is found in the array\n");
+      }
+      else
+      {
+        printf("The item is not found in the array\n");
+      }
+    }
+    else if (ch == 7)
+    {
+      int n;
+      printf("Enter the number of elements\n");
+      scanf("%d", &n);
+      int d[n];
+      printf("Enter the elements\n");
+      for (int i = 0; i < n; i++)
+      {
+        scanf("%d", &d[i]);
+      }
+      printf("The reverse array is\n");
+      reverse(d, n);
+    }
+    else if (ch == 8)
+    {
+      int len;
+      printf("Enter the length of the string\n");
+      scanf("%d", &len);
+      char str[len];
+      printf("Enter the string\n");
+      scanf("%s", str);
+      if (palindrome(str, len))
+      {
+        printf("The string is a palindrome\n");
+      }
+      else
+      {
+        printf("The string is not a palindrome\n");
+      }
+    }
+    else if (ch == 9)
+    {
+      printf("Enter the length of the string\n");
+      int l1;
+      scanf("%d", &l1);
+      printf("Enter the string\n");
+      char s1[l1];
+      scanf("%s", s1);
+      getchar();
+      printf("Enter the character to be replaced\n");
+      char rep;
+      scanf("%c", &rep);
+      getchar();
+      printf("Enter the character that is to be placed\n");
+      char rip;
+      scanf("%c", &rip);
+      printf("The replaced string is\n");
+      replace(s1, l1, rep, rip);
+    }
+    else if (ch == 10)
+    {
+      printf("Enter the number of integers\n");
+      int n;
+      scanf("%d", &n);
+      int e[n];
+      printf("Enter the integers\n");
+      for (int i = 0; i < n; i++)
+      {
+        scanf("%d", &e[i]);
+      }
+      sort(e, n);
+      printf("The sorted array is\n");
+      for (int i = 0; i < n; i++)
+      {
+        printf("%d\n", e[i]);
+      }
+    }
+    else if (ch == 11)
+    {
+      int n;
+      printf("Enter the number of elements\n");
+      scanf("%d", &n);
+      Node *head = NULL;
+      printf("Enter the integers\n");
+      for (int i = 0; i < n; i++)
+      {
+        int b;
+        scanf("%d", &b);
+        head = insertLL(head, b);
+      }
+      printf("The unsorted Linked List is:\n");
+      displayLL(head);
+      head = sortLL(head, head, head->next);
+      printf("The sorted Linked List is:\n");
+      displayLL(head);
+    }
+    else if (ch == 12)
+    {
+      printf("Enter the degree of the tree\n");
+      int n;
+      scanf("%d", &n);
+      printf("Enter the height of the tree\n");
+      int ht;
+      scanf("%d", &ht);
+      int len = ((int)pow(n, ht + 1) - 1) / (n - 1);
+      int arr[MAX];
+      arr[n * (len - 1) + n] = 0;
+      printf("Enter the integers Breadthwise in the array\n");
+      for (int i = 0; i < len; i++)
+      {
+        printf("Enter 0 to signify emptyness\n");
+        scanf("%d", &arr[i]);
+      }
+      int maxi = treeLargest(arr, n, 0);
+      printf("The largest integer is %d\n", maxi);
+    }
+    else
+    {
+      printf("Invalid choice please try again\n");
+    }
+  }
+  printf("Goodbye\n");
+  return 0;
+}

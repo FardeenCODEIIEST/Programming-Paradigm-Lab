@@ -1,0 +1,79 @@
+#include <iostream>
+#include <string>
+using namespace std;
+const int MAX = 1000;
+typedef struct student
+{
+  int age;
+  string name;
+  string dept;
+  int year;
+} student;
+student record[MAX];
+int len = 0;
+void ReadStudentData()
+{
+  string s1, s2;
+  int a, b;
+  cout << "Enter the student name\n";
+  cin >> s1;
+  cout << "Enter the department of the student\n";
+  cin >> s2;
+  cout << "Enter the age of the student\n";
+  cin >> a;
+  cout << "Enter the year of the student\n";
+  cin >> b;
+  record[len].name = s1;
+  record[len].dept = s2;
+  record[len].age = a;
+  record[len].year = b;
+  len++;
+}
+void PrintStudentData()
+{
+  cout << "\tStudent Details are:\t\n";
+  cout << "NAME\t\t\t\t\tDEPARTMENT\t\tAGE\t\tYEAR\n";
+  cout << "----------------------------------------------------------------------------------------\n";
+  for (int i = 0; i < len; i++)
+  {
+    cout << record[i].name << "\t\t\t\t\t" << record[i].dept << "\t\t\t" << record[i].age << "\t\t" << record[i].year << "\n";
+  }
+}
+int main()
+{
+  cout << "\tStudent Data Simulation in C++\t\n";
+  cout << "The Maximum capacity is 1000\n";
+  while (1)
+  {
+    cout << "Enter 0.To Terminate\n 1.To fetch data\n 2.To display data\n";
+    int ch;
+    cin >> ch;
+    if (ch == 0 || len == MAX)
+    {
+      break;
+    }
+    else if (ch == 1)
+    {
+      ReadStudentData();
+    }
+    else if (ch == 2)
+    {
+      PrintStudentData();
+    }
+    else
+    {
+      cout << "Wrong choice\n";
+    }
+  }
+  if (len == MAX)
+  {
+    cout << "Maximum limit reached\n";
+    cout << "\tFinal Student Details are:\t\n";
+    cout << "NAME\t\t\t\t\tDEPARTMENT\t\tAGE\t\tYEAR\n";
+    cout << "----------------------------------------------------------------------------------------\n";
+    for (int i = 0; i < len; i++)
+    {
+      cout << record[i].name << "\t\t\t\t\t" << record[i].dept << "\t\t\t" << record[i].age << "\t\t" << record[i].year << "\n";
+    }
+  }
+}
