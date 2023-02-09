@@ -113,6 +113,10 @@ int main()
   {
     cout << "The determinant of matrix M1 is:\n"
          << M1.determinant(r1) << "\n";
+    Matrix M111(r1, r1, 0);
+    M111 = M1.inverse();
+    cout << "The inverse of M1 is:\n";
+    M111.print();
   }
   else
   {
@@ -122,6 +126,10 @@ int main()
   {
     cout << "The determinant of Matrix M2 is:\n"
          << M2.determinant(r2) << "\n";
+    Matrix M222(r2, r2, 0);
+    M222 = M2.inverse();
+    cout << "The inverse of M2 is:\n";
+    M222.print();
   }
   else
   {

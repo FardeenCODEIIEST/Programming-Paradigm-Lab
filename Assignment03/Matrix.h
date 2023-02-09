@@ -24,6 +24,10 @@ public:
   bool compatible();
   Matrix sub_matrix(int, int, int);
   double determinant(int);
+  Matrix cofactor(int, int, int);
+  Matrix adjoint();
+  Matrix inverse();
+  Matrix scalarMulti(double);
 };
 
 // Constructor for any arbitrary matrix
@@ -236,8 +240,7 @@ double Matrix::determinant(int n)
   {
     return (this->matrix[0][0] * this->matrix[1][1]) - (this->matrix[0][1] * this->matrix[1][0]);
   }
-  int N = this->row;
-  Matrix temp(N, N, 0);
+  Matrix temp(n, n, 0);
   int sign = 1;
   for (int i = 0; i < n; i++)
   {
@@ -255,4 +258,93 @@ bool Matrix::compatible()
     return true;
   }
   return false;
+}
+
+Matrix Matrix::cofactor(int p, int q, int n)
+{
+  int i = 0, j = 0;
+  int N = this->row;
+  Matrix temp(N, N, 0);
+  // Looping for each element of the matrix
+  for (int row1 = 0; row1 < n; row1++)
+  {
+    for (int col1 = 0; col1 < n; col1++)
+    {
+      //  Copying into temporary matrix only those
+      //  element which are not in given row and
+      //  column
+      if (row1 != p && col1 != q)
+      {
+        temp.matrix[i][j++] = this->matrix[row][col];
+
+        // Row is filled, so increase row index and
+        // reset col index
+        if (j == n - 1)
+        {
+          j = 0;
+          i++;
+        }
+      }
+    }
+  }
+  return temp;
+}
+
+Matrix Matrix::adjoint()
+{
+  int N = this->row;
+  Matrix Adj(N, N, 0);
+  if (N == 1)
+  {
+    Adj.matrix[0][0] = 1;
+    return Adj;
+  }
+
+  // temp is used to store cofactors of A[][]
+  int sign = 1;
+  Matrix temp(N, N, 0);
+  for (int i = 0; i < N; i++)
+  {
+    for (int j = 0; j < N; j++)
+    {
+      // Get cofactor of A[i][j]
+      temp = cofactor(i, j, N);
+
+      // sign of adj[j][i] positive if sum of row
+      // and column indexes is even.
+      sign = ((i + j) % 2 == 0) ? 1 : -1; // Basic co-factor sign formula
+
+      // Interchanging rows and columns to get the
+      // transpose of the cofactor matrix
+      Adj.matrix[j][i] = (sign) * (temp.determinant(N - 1));
+    }
+  }
+  return Adj;
+}
+
+Matrix Matrix::scalarMulti(double d)
+{
+  int r = this->row;
+  int c = this->col;
+  Matrix res(r, c, 0);
+  for (int i = 0; i < r; i++)
+  {
+    for (int j = 0; j < c; j++)
+    {
+      res.matrix[i][j] = d * this->matrix[i][j];
+    }
+  }
+  return res;
+}
+
+Matrix Matrix::inverse()
+{
+  int N = this->row;
+  Matrix res(N, N, 0);
+  Matrix adj(N, N, 0);
+  adj = this->adjoint();
+  double det = this->determinant(N);
+  double indet = 1 / det;
+  res = adj.scalarMulti(indet);
+  return res;
 }
