@@ -1,139 +1,7 @@
+#include "Matrix.h"
 #include <bits\stdc++.h>
 using namespace std;
 // data memebers to private and methods to public
-class Matrix
-{
-private:
-  unsigned int row;
-  unsigned int col;
-  vector<vector<double>> matrix;
-
-public:
-  Matrix(unsigned int, unsigned int, double);                 // default constructor(row,col,initial value)
-  Matrix(unsigned int, unsigned int, vector<vector<double>>); // parameterised
-  Matrix Sum(Matrix &);
-  Matrix Subtract(Matrix &);
-  Matrix Multiply(Matrix &);
-  Matrix Transpose();
-  void print();
-  unsigned int getRows();
-  unsigned int getCols();
-};
-
-// Constructor for any arbitrary matrix
-
-Matrix::Matrix(unsigned int rowSize, unsigned int colSize, double initial)
-{
-  row = rowSize;
-  col = colSize;
-  // resize() function use to set the size of the vector
-  matrix.resize(rowSize);
-  for (unsigned int i = 0; i < matrix.size(); i++)
-  {
-    matrix[i].resize(colSize, initial);
-  }
-}
-
-// Constructor for user defined matrix
-// Return Type  Class_Name Function_Name()
-Matrix::Matrix(unsigned int x, unsigned int y, vector<vector<double>> v)
-{
-  row = x;
-  col = y;
-  matrix.resize(x);
-  for (unsigned int i = 0; i < matrix.size(); i++)
-  {
-    matrix[i].resize(y);
-  }
-  for (int i = 0; i < x; i++)
-  {
-    for (int j = 0; j < y; j++)
-    {
-      this->matrix[i][j] = v[i][j];
-    }
-  }
-}
-
-Matrix Matrix::Transpose()
-{
-  int r = row;
-  int c = col;
-  Matrix t(c, r, 0.0);
-  for (int i = 0; i < col; i++)
-  {
-    for (int j = 0; j < row; j++)
-    {
-      t.matrix[i][j] = this->matrix[j][i];
-    }
-  }
-  return t;
-}
-Matrix Matrix::Sum(Matrix &B)
-{
-  Matrix sum(row, col, 0.0);
-  for (unsigned int i = 0; i < row; i++)
-  {
-    for (unsigned int j = 0; j < col; j++)
-    {
-      sum.matrix[i][j] = this->matrix[i][j] + B.matrix[i][j];
-    }
-  }
-  return sum;
-}
-
-void Matrix::print()
-{
-  cout << "The Matrix is \n";
-  for (unsigned int i = 0; i < row; i++)
-  {
-    for (unsigned int j = 0; j < col; j++)
-    {
-      cout << " " << matrix[i][j] << " ";
-    }
-    cout << "\n";
-  }
-}
-
-Matrix Matrix::Subtract(Matrix &B)
-{
-  Matrix diff(row, col, 0.0);
-  for (unsigned int i = 0; i < row; i++)
-  {
-    for (unsigned int j = 0; j < col; j++)
-    {
-      diff.matrix[i][j] = this->matrix[i][j] - B.matrix[i][j];
-    }
-  }
-  return diff;
-}
-unsigned int Matrix::getRows()
-{
-  return this->row;
-}
-unsigned int Matrix::getCols()
-{
-  return this->col;
-}
-Matrix Matrix::Multiply(Matrix &B)
-{
-  Matrix product(row, B.getCols(), 0.0);
-  if (col == B.getRows())
-  {
-    for (unsigned int i = 0; i < row; i++)
-    {
-      for (unsigned int j = 0; j < B.getCols(); j++)
-      {
-        double temp = 0.0;
-        for (unsigned int k = 0; k < col; k++)
-        {
-          temp += matrix[i][k] * B.matrix[k][j];
-        }
-        product.matrix[i][j] = temp;
-      }
-    }
-    return product;
-  }
-}
 int main()
 {
   cout << "\t\tMatrix Class Simulation in C++\n";
@@ -211,6 +79,61 @@ int main()
   else
   {
     cout << "Matrices cannot be multiplied\n";
+  }
+  if (M1 == M2)
+  {
+    cout << "The Matrices are equal\n";
+  }
+  else
+  {
+    cout << "The Matrices are not equal\n";
+  }
+  int sr, er, sc, ec;
+  cout << "Submatrix of Matrix 1\n";
+  cout << "Enter the start row of the sub-matrix in the given matrix\n";
+  cin >> sr;
+  cout << "Enter the end row of the sub-matrix in the given matrix\n";
+  cin >> er;
+  cout << "Enter the start column of the sub-matrix in the given matrix\n";
+  cin >> sc;
+  cout << "Enter the end column of the sub-matrix in the given matrix\n";
+  cin >> ec;
+  if (M1.check(sr, er, sc, ec))
+  {
+    Matrix ans = M1.subMatrix(sr, er, sc, ec);
+    cout << "The Submatrix is:\n";
+    ans.print();
+  }
+  else
+  {
+    cout << "The submatrix could not be formed\n";
+  }
+  double m1, m2;
+  if (M1.compatible())
+  {
+    cout << "The determinant of matrix M1 is:\n"
+         << M1.determinant(r1) << "\n";
+    Matrix M111(r1, r1, 0);
+    M111 = M1.inverse();
+    cout << "The inverse of M1 is:\n";
+    M111.print();
+  }
+  else
+  {
+    cout << "The determinant of Matrix M1 cannot be found\n";
+  }
+  if (M2.compatible())
+  {
+    cout << "The determinant of Matrix M2 is:\n"
+         << M2.determinant(r2) << "\n";
+    Matrix M222(r2, r2, 0);
+    M222 = M2.inverse();
+    cout << "The inverse of M2 is:\n";
+    M222.print();
+  }
+  else
+  {
+    cout << "The determinant of Matrix M2 cannot be found\n";
   }
   return 0;
 }
