@@ -114,6 +114,10 @@ int main()
     cout << "The determinant of matrix M1 is:\n"
          << M1.determinant(r1) << "\n";
     Matrix M111(r1, r1, 0);
+    Matrix M123(r1, c1, 0);
+    M123 = M111.adjoint();
+    cout << "The adjoint of the M1 is:\n";
+    M123.print();
     M111 = M1.inverse();
     cout << "The inverse of M1 is:\n";
     M111.print();
