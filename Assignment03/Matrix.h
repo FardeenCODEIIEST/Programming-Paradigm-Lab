@@ -27,7 +27,7 @@ public:
   Matrix cofactor(int, int, int);
   Matrix adjoint();
   Matrix inverse();
-  Matrix scalarMulti(double);
+  Matrix scalardiv(double);
 };
 
 // Constructor for any arbitrary matrix
@@ -93,7 +93,8 @@ Matrix Matrix::Sum(Matrix &B)
 
 void Matrix::print()
 {
-  cout << "The Matrix is \n";
+  cout << "The Matrix is \n"
+       << fixed << setprecision(4);
   for (unsigned int i = 0; i < row; i++)
   {
     for (unsigned int j = 0; j < col; j++)
@@ -206,8 +207,7 @@ Matrix Matrix::subMatrix(int sr, int er, int sc, int ec)
 
 Matrix Matrix::sub_matrix(int p, int q, int n)
 {
-  int N = this->row;
-  Matrix res(N, N, 0);
+  Matrix res(n, n, 0);
   int i = 0, j = 0;
   // filling the sub matrix
   for (int row = 0; row < n; row++)
@@ -263,8 +263,7 @@ bool Matrix::compatible()
 Matrix Matrix::cofactor(int p, int q, int n)
 {
   int i = 0, j = 0;
-  int N = this->row;
-  Matrix temp(N, N, 0);
+  Matrix temp(n, n, 0);
   // Looping for each element of the matrix
   for (int row1 = 0; row1 < n; row1++)
   {
@@ -322,7 +321,7 @@ Matrix Matrix::adjoint()
   return Adj;
 }
 
-Matrix Matrix::scalarMulti(double d)
+Matrix Matrix::scalardiv(double d)
 {
   int r = this->row;
   int c = this->col;
@@ -331,7 +330,7 @@ Matrix Matrix::scalarMulti(double d)
   {
     for (int j = 0; j < c; j++)
     {
-      res.matrix[i][j] = d * this->matrix[i][j];
+      res.matrix[i][j] = this->matrix[i][j] / d;
     }
   }
   return res;
@@ -340,11 +339,8 @@ Matrix Matrix::scalarMulti(double d)
 Matrix Matrix::inverse()
 {
   int N = this->row;
-  Matrix res(N, N, 0);
-  Matrix adj(N, N, 0);
-  adj = this->adjoint();
+  Matrix adj = this->adjoint();
   double det = this->determinant(N);
-  double indet = 1 / det;
-  res = adj.scalarMulti(indet);
+  Matrix res = adj.scalardiv(det);
   return res;
 }
