@@ -90,13 +90,13 @@ int main()
   }
   int sr, er, sc, ec;
   cout << "Submatrix of Matrix 1\n";
-  cout << "Enter the start row of the sub-matrix in the given matrix\n";
+  cout << "Enter the start row of the sub-matrix in the given matrix M1\n";
   cin >> sr;
-  cout << "Enter the end row of the sub-matrix in the given matrix\n";
+  cout << "Enter the end row of the sub-matrix in the given matrix M1\n";
   cin >> er;
-  cout << "Enter the start column of the sub-matrix in the given matrix\n";
+  cout << "Enter the start column of the sub-matrix in the given matrix M1\n";
   cin >> sc;
-  cout << "Enter the end column of the sub-matrix in the given matrix\n";
+  cout << "Enter the end column of the sub-matrix in the given matrix M1\n";
   cin >> ec;
   if (M1.check(sr, er, sc, ec))
   {
@@ -108,16 +108,32 @@ int main()
   {
     cout << "The submatrix could not be formed\n";
   }
-  double m1, m2;
+  int sr1, er1, sc1, ec1;
+  cout << "Submatrix of Matrix 2\n";
+  cout << "Enter the start row of the sub-matrix in the given matrix M2\n";
+  cin >> sr1;
+  cout << "Enter the end row of the sub-matrix in the given matrix M2\n";
+  cin >> er1;
+  cout << "Enter the start column of the sub-matrix in the given matrix M2\n";
+  cin >> sc1;
+  cout << "Enter the end column of the sub-matrix in the given matrix M2\n";
+  cin >> ec1;
+  if (M2.check(sr1, er1, sc1, ec1))
+  {
+    Matrix ans1 = M2.subMatrix(sr1, er1, sc1, ec1);
+    cout << "The Submatrix is:\n";
+    ans1.print();
+  }
+  else
+  {
+    cout << "The submatrix could not be formed\n";
+  }
   if (M1.compatible())
   {
     cout << "The determinant of matrix M1 is:\n"
          << M1.determinant(r1) << "\n";
     Matrix M111(r1, r1, 0);
     Matrix M123(r1, c1, 0);
-    M123 = M111.adjoint();
-    cout << "The adjoint of the M1 is:\n";
-    M123.print();
     M111 = M1.inverse();
     cout << "The inverse of M1 is:\n";
     M111.print();

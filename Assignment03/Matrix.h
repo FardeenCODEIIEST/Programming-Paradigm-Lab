@@ -173,7 +173,7 @@ bool Matrix::operator==(Matrix &B)
 
 bool Matrix::check(int sr, int er, int sc, int ec)
 {
-  if (sr >= er)
+  if (sr > er)
   {
     return false;
   }
@@ -181,7 +181,7 @@ bool Matrix::check(int sr, int er, int sc, int ec)
   {
     return false;
   }
-  if (sc >= ec)
+  if (sc > ec)
   {
     return false;
   }
@@ -274,7 +274,7 @@ Matrix Matrix::cofactor(int p, int q, int n)
       //  column
       if (row1 != p && col1 != q)
       {
-        temp.matrix[i][j++] = this->matrix[row][col];
+        temp.matrix[i][j++] = this->matrix[row1][col1];
 
         // Row is filled, so increase row index and
         // reset col index
@@ -307,7 +307,7 @@ Matrix Matrix::adjoint()
     for (int j = 0; j < N; j++)
     {
       // Get cofactor of A[i][j]
-      temp = cofactor(i, j, N);
+      temp = this->cofactor(i, j, N);
 
       // sign of adj[j][i] positive if sum of row
       // and column indexes is even.
