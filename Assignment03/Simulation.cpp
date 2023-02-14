@@ -6,6 +6,7 @@
 
 using namespace std;
 
+// Drawing line and circle
 class Screen
 {
 protected:
@@ -42,54 +43,6 @@ public:
   Ellipse();
   Ellipse drawEllipse(int, int, int);
 };
-
-// class Rectangle : public Screen
-// {
-// private:
-//   int length;
-//   int wid;
-
-// public:
-//   Rectangle(int, int);
-//   void drawRec();
-// };
-
-// Rectangle::Rectangle(int l, int w)
-// {
-//   length = l;
-//   wid = w;
-// }
-
-// void Rectangle::drawRec()
-// {
-//   int start = 20;
-//   int i;
-//   for (i = start; i <= start + length; i++)
-//   {
-//     screen[start][i] = '.';
-//   }
-//   int j;
-//   for (j = start; j <= start + width; j++)
-//   {
-//     screen[j][i] = '.';
-//   }
-//   int i1;
-//   for (i1 = i; i1 >= start; i--)
-//   {
-//     screen[j][i1] = '.';
-//   }
-//   for (int j1 = j; j1 >= start; j--)
-//   {
-//     screen[i1][j1] = '.';
-//   }
-//   for (int i = 0; i < HEIGHT; i++)
-//   {
-//     for (int j = 0; j < WIDTH; j++)
-//     {
-//       cout << screen[i][j];
-//     }
-//   }
-// }
 
 Ellipse::Ellipse()
 {
@@ -250,12 +203,5 @@ int main()
   Ellipse C;
   Ellipse Cres = C.drawEllipse(x3, y3, radius);
   Cres.show();
-  // cout << "Enter the length of the rectangle\n";
-  // int l1, w1;
-  // cin >> l1;
-  // cout << "Enter the width of the rectangle\n";
-  // cin >> w1;
-  // Rectangle R1(l1, w1);
-  // R1.drawRec();
   return 0;
 }
