@@ -4,6 +4,8 @@ using namespace std;
 #define CAPACITY 20
 class MyStack
 {
+  static int ct;
+
 private:
   int *data;
   int top;
@@ -22,6 +24,7 @@ public:
   int MaxSize();
   bool isEmpty();
   int CurrentSize();
+  static void count();
   void Display(int);
   MyStack operator+(MyStack);
 };
@@ -32,6 +35,13 @@ MyStack::MyStack()
   capacity = CAPACITY;
   size = 0;
   top = -1;
+  ++ct;
+}
+
+void MyStack::count()
+{
+  cout << "The number of objects created is:\n"
+       << ct << "\n";
 }
 
 MyStack::MyStack(int cap)
@@ -40,6 +50,7 @@ MyStack::MyStack(int cap)
   capacity = cap;
   size = 0;
   top = -1;
+  ++ct;
 }
 
 // MyStack::MyStack(MyStack &S)
@@ -56,6 +67,7 @@ MyStack::MyStack(int cap)
 MyStack::~MyStack()
 {
   delete[] data;
+  --ct;
 }
 
 bool MyStack::isFull()
@@ -119,6 +131,7 @@ void MyStack::Display(int ch)
 MyStack MyStack::operator+(MyStack A)
 {
   MyStack Res;
+  ++ct;
   Res.size = this->size + A.size;
   Res.capacity = this->capacity + A.capacity;
   Res.top = Res.size - 1;
@@ -133,6 +146,9 @@ MyStack MyStack::operator+(MyStack A)
   }
   return Res;
 }
+
+int MyStack::ct;
+
 int main()
 {
   int N;
@@ -145,6 +161,7 @@ int main()
   int d2;
   cin >> d2;
   MyStack S2(d2);
+  S2.count();
   cout << "\tFor Stack 1\n";
   while (1)
   {
@@ -244,6 +261,7 @@ int main()
     }
   }
   MyStack S3 = S1 + S2;
+  S3.count();
   S3.Display(3);
   cout << "Popping one element\n";
   int d = S3.Pop();
