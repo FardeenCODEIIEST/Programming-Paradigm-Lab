@@ -103,24 +103,30 @@ double Circle::calcArea()
 
 int main()
 {
+  double area = 0;
   cout << fixed << setprecision(6);
   cout << "\t\tShape Area in C++\n";
   Shape *pt;
   cout << "For Triangle\n";
   pt = new Triangle();
   pt->readData();
+  area += pt->calcArea();
   cout << "The area of the triangle is:\n"
        << pt->calcArea() << "\n";
   pt = new Rectangle();
   cout << "For Rectangle\n";
   pt->readData();
+  area += pt->calcArea();
   cout << "The area of the rectangle is:\n"
        << pt->calcArea() << "\n";
   pt = new Circle();
   cout << "For Circle\n";
   pt->readData();
+  area += pt->calcArea();
   cout << "The area of the circle is:\n"
        << pt->calcArea() << "\n";
+  cout << "Total area covered by these shapes is:\n"
+       << area << "\n";
   free(pt);
   return 0;
 }
