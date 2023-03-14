@@ -383,7 +383,7 @@ double Set::standardDeviation()
 
 int main()
 {
-  cout << "\t\tSet Implemenetation\n";
+  cout << "\t\tSet Implementation\n";
   cout << "Enter the total number of elements in the Universal Set\n";
   int cap;
   cin >> cap;
@@ -429,12 +429,6 @@ int main()
     }
     S2.add(d);
   }
-  cout << "The Union of the Sets is:\n";
-  Set Uni = S1.unionSet(S2);
-  Uni.display();
-  cout << "The Intersection of the Sets is:\n";
-  Set Inter = S1.intersectionSet(S2);
-  Inter.display();
   cout << "Set S1 is:\n";
   S1.display();
   cout << "The Complement of Set S1 is:\n";
@@ -445,6 +439,12 @@ int main()
   cout << "The complement of Set S2 is:\n";
   Set S22 = S2.complementSet(U);
   S22.display();
+  cout << "The Union of the Sets is:\n";
+  Set Uni = S1.unionSet(S2);
+  Uni.display();
+  cout << "The Intersection of the Sets is:\n";
+  Set Inter = S1.intersectionSet(S2);
+  Inter.display();
   cout << "The Set Difference S1-S2 is:\n";
   Set S1_2 = S1 - S2;
   S1_2.display();

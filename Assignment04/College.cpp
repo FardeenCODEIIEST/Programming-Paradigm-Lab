@@ -6,7 +6,7 @@ using namespace std;
   Hierarchy levels
   Level 1:- Person
   level 2:- Academic,Staff
-  level 3:-[Student],[Professor],[Clerk]
+  level 3:-[Student]:Academic;[Professor]:Academic,Staff;[Clerk]:Staff.
 */
 
 class Person
