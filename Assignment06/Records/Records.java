@@ -1,4 +1,4 @@
-package Assignment05;
+package Records;
 
 import java.util.Scanner;
 
@@ -16,37 +16,37 @@ class Records {
     for (int i = 0; i < size; i++) {// Declaring objects
       System.out.println("Enter the name");
       String sname = sc.next();
-      System.out.println("Enter the roll no.");
-      int n1 = sc.nextInt();
-      System.out.println("Enter the id");
-      String id1 = sc.next();
+      System.out.println("Enter the age");
+      int age = sc.nextInt();
       System.out.println("Enter the Department");
       String dep = sc.next();
-      arr[i].setData(sname, n1, id1, dep);
+      System.out.println("Enter the year");
+      int year = sc.nextInt();
+      arr[i].readData(sname, age, year, dep);
     }
     System.out.println("The records are:");
     for (int i = 0; i < size; i++) {// Displaying objects
-      arr[i].display();
+      arr[i].printData();
     }
     sc.close();
   }
 }
 
 class Student {
-  int roll;
+  int age;
   String name;
-  String id;
+  int year;
   String dept;
 
-  public void setData(String name, int roll, String id, String dept) {
+  public void readData(String name, int age, int year, String dept) {
     this.name = name;
-    this.roll = roll;
-    this.id = id;
+    this.year = year;
+    this.age = age;
     this.dept = dept;
   }
 
-  public void display() {
+  public void printData() {
     System.out
-        .println(" Name is :" + name + " Roll is :" + roll + " ID is:" + id + " Department is:" + dept);
+        .println(" Name is :" + name + " Age is : " + age + " Year is:" + year + " Department is:" + dept);
   }
 }
